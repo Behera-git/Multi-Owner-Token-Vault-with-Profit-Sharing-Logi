@@ -53,4 +53,16 @@ contract VaultSplit {
 
         emit ProfitsDistributed(balance);
     }
+
+    function addOwner(address newOwner, uint256 newShare) external onlyOwner {
+        require(newOwner != address(0), "Invalid address");
+        require(shares[newOwner] == 0, "Owner already exists");
+        require(newShare > 0, "Share must be greater than 0");
+
+        owners.push(newOwner);
+        shares[newOwner] = newShare;
+        totalShares += newShare;
+
+        emit OwnerAdded(newOwner, newShare);
+    }
 }
